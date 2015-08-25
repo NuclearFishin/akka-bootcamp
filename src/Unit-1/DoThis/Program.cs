@@ -19,14 +19,15 @@ namespace WinTail
             var tailCoordinatorProps = Props.Create(() => new TailCoordinatorActor());
             IActorRef tailCoordinatorActor = MyActorSystem.ActorOf(tailCoordinatorProps, nameof(tailCoordinatorActor));
 
-            var validatorProps = Props.Create(() => new FileValidatorActor(consoleWriterActor, tailCoordinatorActor));
-            IActorRef validatorActor = MyActorSystem.ActorOf(validatorProps, nameof(validatorActor));
+            var validatorProps = Props.Create(() => new FileValidatorActor(consoleWriterActor));
+            IActorRef validationActor = MyActorSystem.ActorOf(validatorProps, nameof(validationActor));
 
-            var consoleReaderProps = Props.Create(() => new ConsoleReaderActor(validatorActor));
+            var consoleReaderProps = Props.Create<ConsoleReaderActor>();
             IActorRef consoleReaderActor = MyActorSystem.ActorOf(consoleReaderProps, nameof(consoleReaderActor));
-            
+
             // tell console reader to begin
-            consoleReaderActor.Tell(ConsoleReaderActor.StartCommand);
+            //consoleReaderActor.Tell(ConsoleReaderActor.StartCommand);
+            validationActor.Tell(@"D:\source\akka-bootcamp\src\Unit-1\lesson4\DoThis\sample_log_file.txt");
 
             // blocks the main thread from exiting until the actor system is shut down
             MyActorSystem.AwaitTermination();
