@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 using Akka.Actor;
 
@@ -14,7 +15,7 @@ namespace ChartApp.Actors
         public const int MaxPoints = 250;
 
         /// <summary>
-        /// Incrementing counter we use to plot along the x-axis
+        /// Incrementing counter we use to plot along the X-axis
         /// </summary>
         private int xPosCounter = 0;
 
@@ -40,11 +41,11 @@ namespace ChartApp.Actors
                 Series = series;
             }
 
-            public Series Series { get; set; }
+            public Series Series { get; private set; }
         }
 
         /// <summary>
-        /// Remove a <see cref="Series"/> from the chart
+        /// Remove an existing <see cref="Series"/> from the chart
         /// </summary>
         public class RemoveSeries
         {
@@ -53,7 +54,7 @@ namespace ChartApp.Actors
                 SeriesName = seriesName;
             }
 
-            public string SeriesName { get; set; }
+            public string SeriesName { get; private set; }
         }
 
         #endregion
@@ -76,33 +77,33 @@ namespace ChartApp.Actors
             Receive<RemoveSeries>(removeSeries => HandleRemoveSeries(removeSeries));
             Receive<Metric>(metric => HandleMetrics(metric));
         }
-        
+
         #region Individual Message Type Handlers
-        
+
         private void HandleInitialize(InitializeChart ic)
         {
             if (ic.InitialSeries != null)
             {
-                // swap the two series out
+                //swap the two series out
                 _seriesIndex = ic.InitialSeries;
             }
 
-            // delete any existing series
+            //delete any existing series
             _chart.Series.Clear();
 
-            // set the axes up
+            //set the axes up
             var area = _chart.ChartAreas[0];
             area.AxisX.IntervalType = DateTimeIntervalType.Number;
             area.AxisY.IntervalType = DateTimeIntervalType.Number;
 
             SetChartBoundaries();
 
-            // attempt to render the initial chart
+            //attempt to render the initial chart
             if (_seriesIndex.Any())
             {
                 foreach (var series in _seriesIndex)
                 {
-                    // force both the chart and the internal index to use the same names
+                    //force both the chart and the internal index to use the same names
                     series.Value.Name = series.Key;
                     _chart.Series.Add(series.Value);
                 }
@@ -110,14 +111,13 @@ namespace ChartApp.Actors
 
             SetChartBoundaries();
         }
-        
+
         private void HandleAddSeries(AddSeries series)
         {
-            if (!string.IsNullOrEmpty(series.Series.Name) && !_seriesIndex.ContainsKey(series.Series.Name))
+            if(!string.IsNullOrEmpty(series.Series.Name) && !_seriesIndex.ContainsKey(series.Series.Name))
             {
                 _seriesIndex.Add(series.Series.Name, series.Series);
                 _chart.Series.Add(series.Series);
-
                 SetChartBoundaries();
             }
         }
@@ -129,7 +129,6 @@ namespace ChartApp.Actors
                 var seriesToRemove = _seriesIndex[series.SeriesName];
                 _seriesIndex.Remove(series.SeriesName);
                 _chart.Series.Remove(seriesToRemove);
-
                 SetChartBoundaries();
             }
         }
@@ -140,9 +139,7 @@ namespace ChartApp.Actors
             {
                 var series = _seriesIndex[metric.Series];
                 series.Points.AddXY(xPosCounter++, metric.CounterValue);
-                while (series.Points.Count > MaxPoints)
-                    series.Points.RemoveAt(0);
-
+                while(series.Points.Count > MaxPoints) series.Points.RemoveAt(0);
                 SetChartBoundaries();
             }
         }

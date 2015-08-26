@@ -1,10 +1,8 @@
-﻿using Akka.Actor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using Akka.Actor;
 
 namespace ChartApp.Actors
 {
@@ -28,34 +26,32 @@ namespace ChartApp.Actors
             _cancelPublishing = new Cancelable(Context.System.Scheduler); // QUESTION: what's up with creating cancelable like this, and not directly from the scheduler or from Cancelable.Create?
         }
 
-        #region Actor lifecycly methods
+        #region Actor lifecycle methods
 
         protected override void PreStart()
         {
-            base.PreStart();
-
-            // create a new instance of the performance counter
+            //create a new instance of the performance counter
             _counter = _performanceCounterGenerator();
-            Context.System.Scheduler.ScheduleTellRepeatedly(TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(250), Self, new GatherMetrics(), Self, _cancelPublishing);
+            Context.System.Scheduler.ScheduleTellRepeatedly(TimeSpan.FromMilliseconds(250), TimeSpan.FromMilliseconds(250), Self,
+                new GatherMetrics(), Self, _cancelPublishing);
         }
 
         protected override void PostStop()
         {
             try
             {
-                // terminate the scheduled task
+                //terminate the scheduled task
                 _cancelPublishing.Cancel(false);
                 _counter.Dispose();
             }
-            catch
+            catch 
             {
-                // don't care about additional "ObjectDisposed" exceptions
-
+                //don't care about additional "ObjectDisposed" exceptions
                 // QUESTION: should catch only ObjectDisposedException here?
             }
             finally
             {
-                base.PostStop();
+                base.PostStop();    
             }
         }
 
@@ -65,17 +61,15 @@ namespace ChartApp.Actors
         {
             if (message is GatherMetrics)
             {
-                // publish latest counter value to all subscribers
+                //publish latest counter value to all subscribers
                 var metric = new Metric(_seriesName, _counter.NextValue());
-                foreach (var sub in _subscriptions)
-                {
+                foreach(var sub in _subscriptions)
                     sub.Tell(metric);
-                }
             }
             else if (message is SubscribeCounter)
             {
                 // add a subscription for this counter
-                // (its parent's job to filter by counter types)
+                // (it's parent's job to filter by counter types)
                 var sc = message as SubscribeCounter;
                 _subscriptions.Add(sc.Subscriber);
             }

@@ -16,12 +16,13 @@ namespace ChartApp.Actors
     {
         public Metric(string series, float counterValue)
         {
-            Series = series;
             CounterValue = counterValue;
+            Series = series;
         }
 
-        public string Series { get; set; }
-        public float CounterValue { get; set; }
+        public string Series { get; private set; }
+
+        public float CounterValue { get; private set; }
     }
 
     #endregion
@@ -39,18 +40,19 @@ namespace ChartApp.Actors
     }
 
     /// <summary>
-    /// Enables a counter and begins publishing values to <see cref="Subscriber"/>
+    /// Enables a counter and begins publishing values to <see cref="Subscriber"/>.
     /// </summary>
     public class SubscribeCounter
     {
         public SubscribeCounter(CounterType counter, IActorRef subscriber)
         {
-            Counter = counter;
             Subscriber = subscriber;
+            Counter = counter;
         }
 
-        public CounterType Counter { get; set; }
-        public IActorRef Subscriber { get; set; }
+        public CounterType Counter { get; private set; }
+
+        public IActorRef Subscriber { get; private set; }
     }
 
     /// <summary>
@@ -60,12 +62,13 @@ namespace ChartApp.Actors
     {
         public UnsubscribeCounter(CounterType counter, IActorRef subscriber)
         {
-            Counter = counter;
             Subscriber = subscriber;
+            Counter = counter;
         }
 
-        public CounterType Counter { get; set; }
-        public IActorRef Subscriber { get; set; }
+        public CounterType Counter { get; private set; }
+
+        public IActorRef Subscriber { get; private set; }
     }
 
     #endregion

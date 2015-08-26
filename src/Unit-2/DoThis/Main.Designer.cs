@@ -28,71 +28,71 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.sysChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.CpuButton = new System.Windows.Forms.Button();
-            this.MemoryButton = new System.Windows.Forms.Button();
-            this.DiskButton = new System.Windows.Forms.Button();
+            this.btnCpu = new System.Windows.Forms.Button();
+            this.btnMemory = new System.Windows.Forms.Button();
+            this.btnDisk = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.sysChart)).BeginInit();
             this.SuspendLayout();
             // 
             // sysChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.sysChart.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.sysChart.ChartAreas.Add(chartArea1);
             this.sysChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.sysChart.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.sysChart.Legends.Add(legend1);
             this.sysChart.Location = new System.Drawing.Point(0, 0);
             this.sysChart.Name = "sysChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.sysChart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.sysChart.Series.Add(series1);
             this.sysChart.Size = new System.Drawing.Size(684, 446);
             this.sysChart.TabIndex = 0;
             this.sysChart.Text = "sysChart";
             // 
-            // CpuButton
+            // btnCpu
             // 
-            this.CpuButton.Location = new System.Drawing.Point(566, 320);
-            this.CpuButton.Name = "CpuButton";
-            this.CpuButton.Size = new System.Drawing.Size(89, 23);
-            this.CpuButton.TabIndex = 1;
-            this.CpuButton.Text = "CPU (ON)";
-            this.CpuButton.UseVisualStyleBackColor = true;
-            this.CpuButton.Click += new System.EventHandler(this.CpuButton_Click);
+            this.btnCpu.Location = new System.Drawing.Point(562, 274);
+            this.btnCpu.Name = "btnCpu";
+            this.btnCpu.Size = new System.Drawing.Size(110, 41);
+            this.btnCpu.TabIndex = 1;
+            this.btnCpu.Text = "CPU (ON)";
+            this.btnCpu.UseVisualStyleBackColor = true;
+            this.btnCpu.Click += new System.EventHandler(this.btnCpu_Click);
             // 
-            // MemoryButton
+            // btnMemory
             // 
-            this.MemoryButton.Location = new System.Drawing.Point(566, 349);
-            this.MemoryButton.Name = "MemoryButton";
-            this.MemoryButton.Size = new System.Drawing.Size(89, 23);
-            this.MemoryButton.TabIndex = 2;
-            this.MemoryButton.Text = "Memory (OFF)";
-            this.MemoryButton.UseVisualStyleBackColor = true;
-            this.MemoryButton.Click += new System.EventHandler(this.MemoryButton_Click);
+            this.btnMemory.Location = new System.Drawing.Point(562, 321);
+            this.btnMemory.Name = "btnMemory";
+            this.btnMemory.Size = new System.Drawing.Size(110, 41);
+            this.btnMemory.TabIndex = 2;
+            this.btnMemory.Text = "MEMORY (OFF)";
+            this.btnMemory.UseVisualStyleBackColor = true;
+            this.btnMemory.Click += new System.EventHandler(this.btnMemory_Click);
             // 
-            // DiskButton
+            // btnDisk
             // 
-            this.DiskButton.Location = new System.Drawing.Point(566, 378);
-            this.DiskButton.Name = "DiskButton";
-            this.DiskButton.Size = new System.Drawing.Size(89, 23);
-            this.DiskButton.TabIndex = 3;
-            this.DiskButton.Text = "Disk (OFF)";
-            this.DiskButton.UseVisualStyleBackColor = true;
-            this.DiskButton.Click += new System.EventHandler(this.DiskButton_Click);
+            this.btnDisk.Location = new System.Drawing.Point(562, 368);
+            this.btnDisk.Name = "btnDisk";
+            this.btnDisk.Size = new System.Drawing.Size(110, 41);
+            this.btnDisk.TabIndex = 3;
+            this.btnDisk.Text = "DISK (OFF)";
+            this.btnDisk.UseVisualStyleBackColor = true;
+            this.btnDisk.Click += new System.EventHandler(this.btnDisk_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 446);
-            this.Controls.Add(this.DiskButton);
-            this.Controls.Add(this.MemoryButton);
-            this.Controls.Add(this.CpuButton);
+            this.Controls.Add(this.btnDisk);
+            this.Controls.Add(this.btnMemory);
+            this.Controls.Add(this.btnCpu);
             this.Controls.Add(this.sysChart);
             this.Name = "Main";
             this.Text = "System Metrics";
@@ -106,9 +106,9 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart sysChart;
-        private System.Windows.Forms.Button CpuButton;
-        private System.Windows.Forms.Button MemoryButton;
-        private System.Windows.Forms.Button DiskButton;
+        private System.Windows.Forms.Button btnCpu;
+        private System.Windows.Forms.Button btnMemory;
+        private System.Windows.Forms.Button btnDisk;
     }
 }
 
